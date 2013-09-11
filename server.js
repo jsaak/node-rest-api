@@ -1,7 +1,11 @@
+var config = require('./config').release;
 var app = require('./app');
-var port = 3000;
-var host = 'localhost';
+var mongoose = require('mongoose');
 
-app.listen(port, host, function() {
-   console.log("REST API server listening on port " + port);
+mongoose.connect(config.db, function() {
+   console.log('Connected to '+config.db)
+});
+
+app.listen(config.port, config.host, function() {
+   console.log("REST API server listening on port " + config.port);
 });
