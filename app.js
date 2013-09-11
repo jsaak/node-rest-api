@@ -53,10 +53,14 @@ db.once('open', function callback() {
                //isbn change is not allowed
                res.send(422,'update failed');
             } else {
-               //TODO find something so i do not have to enum all fields
-               if (req.body.title !== undefined) {book.title = req.body.title;}
-               if (req.body.author !== undefined) {book.author = req.body.author;}
-               if (req.body.cover !== undefined) {book.cover = req.body.cover;}
+               //update fields
+               for (var field in Book.schema.paths) {
+                  if ((field !== 'isbn') && (field !== '_id') && (field !== '__v')) {
+                     if (req.body[field] !== undefined) {
+                        book[field] = req.body[field];
+                     }
+                  }
+               }
 
                book.save(function(err){
                   if (err) {

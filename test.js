@@ -157,24 +157,31 @@ describe('Sample REST API', function() {
       .expect(422,'insert failed',done)
    })
 
-   it('should fail to add new book when ISBN is not valid', function(done) {
+   it('should fail to add new book when ISBN is not valid (1)', function(done) {
       request(app)
       .post("/book")
       .send({isbn: '-456-456-456',author:'a',title:'t'})
       .expect(422,'insert failed',done)
    })
 
-   it('should fail to add new book when ISBN is not valid', function(done) {
+   it('should fail to add new book when ISBN is not valid (2)', function(done) {
       request(app)
       .post("/book")
       .send({isbn: 'XXX',author:'a',title:'t'})
       .expect(422,'insert failed',done)
    })
 
-   it('should fail to add new book when ISBN is not valid', function(done) {
+   it('should fail to add new book when ISBN is not valid (3)', function(done) {
       request(app)
       .post("/book")
       .send({isbn: '000-000-000',author:'a',title:'t'})
+      .expect(422,'insert failed',done)
+   })
+
+   it('should fail to add new book when cover url is not valid', function(done) {
+      request(app)
+      .post("/book")
+      .send({isbn: '100-000-000',author:'a',title:'t',cover:'invalid'})
       .expect(422,'insert failed',done)
    })
 
